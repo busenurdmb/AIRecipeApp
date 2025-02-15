@@ -1,0 +1,92 @@
+﻿
+
+@{
+Layout = null;
+    var isAuthenticated = Context.Session.GetString("auth_token") != null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <style>
+        /* Navbar animasyonu */
+        .navbar-custom {
+            background: linear-gradient(90deg, #007bff, #00c6ff);
+            padding: 15px;
+            transition: 0.3s;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+            .navbar-custom a {
+                color: white !important;
+                font-weight: bold;
+                transition: 0.3s;
+            }
+
+                .navbar-custom a:hover {
+                    color: #f8f9fa !important;
+                    text-shadow: 0px 0px 10px rgba(255, 255, 255, 0.8);
+                }
+
+        /* Sayfa içeriğini aşağı kaydırma */
+        .content-container {
+            margin-top: 80px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasyon Menüsü -->
+    <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="@Url.Action("Index", "Home")">🍽️ AI Tarif Uygulaması</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Home")">🏠 Anasayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "RecipeUI")">🔍 Tarif Sor</a>
+                    </li>
+                    @if (isAuthenticated)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("MyRecipes", "RecipeUI")">📖 Kaydettiğim Tarifler</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("SavedRecipes", "RecipeUI")">🌎 Tüm Tarifler</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-danger text-white ms-2" href="@Url.Action("Logout", "AuthUI")">🚪 Çıkış Yap</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link btn btn-light text-primary ms-2" href="@Url.Action("Login", "AuthUI")">🔑 Giriş Yap</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sayfa İçeriği -->
+    <div class="container content-container">
+        @RenderBody()
+    </div>
+
+    <!-- Bootstrap 5 -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

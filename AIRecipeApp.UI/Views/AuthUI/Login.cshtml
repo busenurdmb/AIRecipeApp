@@ -1,0 +1,173 @@
+﻿@{
+    Layout = null;
+    ViewData["Title"] = "Giriş Yap";
+}
+
+<canvas id="particles"></canvas>
+
+<div class="login-container">
+    <div class="login-box custom-colored-box fade-in">
+        <h2 class="title-glow">🚀 AI Recipe Giriş</h2>
+
+        @if (ViewBag.Error != null)
+        {
+            <p class="text-danger fade-in">@ViewBag.Error</p>
+        }
+
+        <form method="post" class="fade-in">
+            <div class="form-group">
+                <input type="text" name="username" class="form-control glow-input" placeholder="Kullanıcı Adı" required />
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="password" name="password" class="form-control glow-input" placeholder="Şifre" required />
+            </div>
+            <br />
+            <button type="submit" class="btn-glow">Giriş Yap</button>
+        </form>
+    </div>
+</div>
+
+<style>
+    /* 🌌 Canlı Arka Plan */
+    body {
+        margin: 0;
+        overflow: hidden;
+        font-family: 'Arial', sans-serif;
+        color: #fff;
+        background: radial-gradient(circle at 50% 50%, rgba(0, 10, 40, 1) 0%, rgba(0, 0, 20, 1) 100%);
+    }
+
+    /* 🚀 Partikül Efekti */
+    canvas {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+    }
+
+    /* 🔥 Login Kutusu */
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .login-box {
+        padding: 30px;
+        border-radius: 12px;
+        text-align: center;
+        width: 100%;
+        max-width: 400px;
+        backdrop-filter: blur(20px);
+        transition: 0.5s ease-in-out;
+    }
+
+    /* 🟢 Yeni Koyu Arka Planlı Giriş Kutusu */
+    .custom-colored-box {
+        background: rgba(0, 0, 40, 0.8) !important;
+        box-shadow: 0px 4px 25px rgba(0, 255, 255, 0.5) !important;
+        border: 1px solid rgba(0, 255, 255, 0.5) !important;
+        animation: custom-glow 1.5s infinite alternate ease-in-out;
+    }
+
+    /* 🟢 Hafif Parlayan Efekt */
+    @@keyframes custom-glow {
+        0%
+
+    {
+        box-shadow: 0px 4px 15px rgba(0, 255, 255, 0.3);
+    }
+
+    100% {
+        box-shadow: 0px 4px 30px rgba(0, 255, 255, 0.8);
+    }
+
+    }
+
+    /* 🎇 Yazılar için Neon Glow */
+    .title-glow {
+        color: #00ffff;
+        font-size: 24px;
+        font-weight: bold;
+        text-shadow: 0px 0px 10px rgba(0, 255, 255, 0.8);
+        animation: text-glow 1.5s infinite alternate;
+    }
+
+    @@keyframes text-glow {
+        0%
+
+    {
+        text-shadow: 0px 0px 5px rgba(0, 255, 255, 0.4);
+    }
+
+    100% {
+        text-shadow: 0px 0px 15px rgba(0, 255, 255, 0.9);
+    }
+
+    }
+
+    /* 🟡 Input Alanları */
+    .form-control {
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        width: 100%;
+        color: #fff;
+        font-size: 16px;
+        transition: 0.3s;
+    }
+
+    .glow-input {
+        box-shadow: 0px 0px 5px rgba(0, 255, 255, 0.3);
+    }
+
+        .glow-input:focus {
+            box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.6);
+            outline: none;
+        }
+
+    /* 🚀 Buton */
+    .btn-glow {
+        background: linear-gradient(90deg, #00ffff, #0088ff);
+        border: none;
+        padding: 12px;
+        border-radius: 8px;
+        font-size: 16px;
+        color: white;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0px 0px 10px rgba(0, 255, 255, 0.5);
+    }
+
+        .btn-glow:hover {
+            background: linear-gradient(90deg, #0088ff, #00ffff);
+            box-shadow: 0px 0px 20px rgba(0, 255, 255, 0.9);
+        }
+
+    /* 🌀 Fade-in Animasyonu */
+    .fade-in {
+        opacity: 0;
+        animation: fadeIn 1s ease-in forwards;
+    }
+
+    @@keyframes fadeIn {
+        from
+
+    {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    }
+</style>

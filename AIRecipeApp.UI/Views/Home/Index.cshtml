@@ -1,0 +1,119 @@
+﻿@{
+    Layout = "~/Views/Layout/_Layout.cshtml";
+    ViewData["Title"] = "AI Tarif Üretici";
+    var isAuthenticated = Context.Session.GetString("auth_token") != null;
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+</head>
+<body class="bg-dark text-white">
+
+    <div class="container mt-5 text-center">
+        <h1 class="fw-bold text-primary">🍽️ AI Destekli Tarif Üretici</h1>
+        <p class="lead">Yapay zeka ile en iyi yemek tariflerini oluşturun! 🧑‍🍳</p>
+
+        <div class="mt-4">
+            @if (!isAuthenticated)
+            {
+                <a href="@Url.Action("Login", "AuthUI")" class="btn btn-outline-light btn-lg">🔑 Giriş Yap</a>
+            }
+            else
+            {
+                <a href="@Url.Action("MyRecipes", "RecipeUI")" class="btn btn-outline-success btn-lg">📜 Tariflerim</a>
+                <a href="@Url.Action("Logout", "AuthUI")" class="btn btn-danger btn-lg ms-3">🚪 Çıkış Yap</a>
+            }
+        </div>
+
+        <div class="card shadow-lg p-4 mt-5 bg-light text-dark">
+            <h2 class="text-primary">🛒 Malzemeleri Gir, Tarifi Al!</h2>
+
+            @if (TempData["SuccessMessage"] != null)
+            {
+                <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+            }
+
+            @if (TempData["ErrorMessage"] != null)
+            {
+                <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+            }
+
+            <form method="post" asp-action="GetRecipe" class="mt-4">
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Malzemeleri Gir (Virgülle Ayır):</label>
+                    <input type="text" name="ingredients" class="form-control" placeholder="Domates, Peynir, Yumurta" required />
+                </div>
+
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-primary btn-lg">✨ Tarif Al</button>
+                </div>
+            </form>
+            @if (ViewBag.RecipeResult != null)
+            {
+                var recipeJson = Newtonsoft.Json.JsonConvert.DeserializeObject<dynamic>(ViewBag.RecipeResult);
+
+                <div class="mt-4 p-3 bg-light border rounded">
+                    <h3 class="text-success">📜 Önerilen Tarif: @recipeJson.title</h3>
+
+                    <h4>Malzemeler:</h4>
+                    <ul>
+                        @foreach (var ingredient in recipeJson.ingredients)
+                        {
+                            <li>@ingredient</li>
+                        }
+                    </ul>
+
+                    <h4>Hazırlık Talimatları:</h4>
+                    <div id="recipeSummary">
+                        @Html.Raw(recipeJson.instructions.ToString().Substring(0, Math.Min(300, recipeJson.instructions.ToString().Length)))...
+                        <button class="btn btn-link" onclick="toggleRecipe()">Daha Fazla Göster</button>
+                    </div>
+                    <div id="recipeFull" style="display:none;">
+                        <p>@Html.Raw(recipeJson.instructions.ToString().Replace("\n", "<br>"))</p>
+                        <button class="btn btn-link" onclick="toggleRecipe()">Daha Az Göster</button>
+                    </div>
+
+                    <div class="mt-3">
+                        @if (isAuthenticated)
+                        {
+                            <form method="post" asp-action="SaveRecipe">
+                                <input type="hidden" name="Title" value="@recipeJson.title" />
+                                <input type="hidden" name="Ingredients" value="@string.Join(",", recipeJson.ingredients)" />
+                                <input type="hidden" name="Instructions" value="@recipeJson.instructions" />
+                                <button type="submit" class="btn btn-success">💾 Tarifi Kaydet</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("Login", "AuthUI")" class="btn btn-warning">🔐 Tarif Kaydetmek İçin Giriş Yap</a>
+                        }
+                    </div>
+                </div>
+            }
+
+           
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+<script>
+    function toggleRecipe() {
+        var summary = document.getElementById("recipeSummary");
+        var full = document.getElementById("recipeFull");
+
+        if (summary.style.display === "none") {
+            summary.style.display = "block";
+            full.style.display = "none";
+        } else {
+            summary.style.display = "none";
+            full.style.display = "block";
+        }
+    }
+</script>

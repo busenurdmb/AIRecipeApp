@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35723.152
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIRecipeApp.Api", "AIRecipeApp.Api\AIRecipeApp.Api.csproj", "{46182112-90F0-4127-815D-AC8BA3407502}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AIRecipeApp.UI", "AIRecipeApp.UI\AIRecipeApp.UI.csproj", "{71A91667-FDE9-44B3-8421-DE4629A87C8B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{46182112-90F0-4127-815D-AC8BA3407502}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46182112-90F0-4127-815D-AC8BA3407502}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46182112-90F0-4127-815D-AC8BA3407502}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46182112-90F0-4127-815D-AC8BA3407502}.Release|Any CPU.Build.0 = Release|Any CPU
+		{71A91667-FDE9-44B3-8421-DE4629A87C8B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{71A91667-FDE9-44B3-8421-DE4629A87C8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{71A91667-FDE9-44B3-8421-DE4629A87C8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{71A91667-FDE9-44B3-8421-DE4629A87C8B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A427AF59-A054-4E7F-AD53-660DF9DFD615}
+	EndGlobalSection
+EndGlobal

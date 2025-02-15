@@ -1,0 +1,125 @@
+﻿@model List<Recipe>
+
+@{
+    Layout = "~/Views/Layout/_Layout.cshtml";
+    ViewData["Title"] = "Kaydedilen Tarifler";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg p-4">
+        <h2 class="text-primary text-center">📂 Kaydedilen Tarifler</h2>
+
+        @if (Model == null || !Model.Any())
+        {
+            <p class="text-center text-muted mt-3">Henüz hiç tarif kaydedilmemiş. 😞</p>
+        }
+        else
+        {
+            <div class="table-responsive mt-4">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">🍽️ Tarif Adı</th>
+                            <th scope="col">🥦 Malzemeler</th>
+                            <th scope="col">📜 Talimatlar</th>
+                            <th scope="col" class="text-center">🔍 Detay</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var recipe in Model)
+                        {
+                            <tr class="table-light">
+                                <td class="fw-bold">@recipe.Title</td>
+                                <td>
+                                    <div class="ingredients-container">
+                                        @foreach (var ingredient in recipe.Ingredients)
+                                        {
+                                            <span class="badge bg-success me-1">@ingredient</span>
+                                        }
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="instructions-preview">
+                                        @(recipe.Instructions.Length > 100 ? recipe.Instructions.Substring(0, 100) + "..." : recipe.Instructions)
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <button class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#recipeModal-@recipe.Title.Replace(" ", "-")">
+                                        📖 Daha Fazla
+                                    </button>
+                                </td>
+                            </tr>
+
+                            <!-- 📌 Genişleyen Modal -->
+                            <div class="modal fade" id="recipeModal-@recipe.Title.Replace(" ", "-")" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <!-- ✨ Daha geniş modal -->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title text-primary fw-bold" id="recipeModalLabel">@recipe.Title</h4>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <!-- 📌 Malzemeler -->
+                                                <div class="col-md-4">
+                                                    <h5 class="fw-bold text-success">🥦 Malzemeler:</h5>
+                                                    <ul class="list-group">
+                                                        @foreach (var ingredient in recipe.Ingredients)
+                                                        {
+                                                            <li class="list-group-item">@ingredient</li>
+                                                        }
+                                                    </ul>
+                                                </div>
+
+                                                <!-- 📌 Talimatlar -->
+                                                <div class="col-md-8">
+                                                    <h5 class="fw-bold text-primary">📜 Hazırlık Talimatları:</h5>
+                                                    <div class="scrollable-box">
+                                                        <p>@Html.Raw(recipe.Instructions.ToString().Replace("\n", "<br>"))</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* 🟢 Malzemeler daha düzenli görünsün diye */
+    .list-group-item {
+        font-size: 14px;
+    }
+
+    /* 📜 Tarif uzun olursa kaydırılabilir olsun */
+    .scrollable-box {
+        max-height: 300px;
+        overflow-y: auto;
+        padding: 10px;
+        background: #f8f9fa;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+    }
+
+    /* 🚀 Hover efekti */
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 123, 255, 0.1);
+        transition: 0.3s ease;
+    }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
